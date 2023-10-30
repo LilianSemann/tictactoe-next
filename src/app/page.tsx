@@ -12,7 +12,7 @@ export default function Home() {
   ])
 
   function play(i: number, j: number) {
-    if (board[i][j] !== "") {return}
+    if (board[i][j] !== "") return
 
     const newBoard = board.map((row, rowI) => 
       row.map((cell, colI) => {
@@ -23,8 +23,8 @@ export default function Home() {
         }
       }))
 
+    setBoard(newBoard)
     setPlayer(player === "X" ? "O" : "X")
-    setBoard(newBoard)    
   }
 
   return (
