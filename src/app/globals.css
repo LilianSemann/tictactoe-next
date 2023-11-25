@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.First {
+    @apply h-[100px] w-[100px] bg-[url('/flor.png')] bg-contain bg-center bg-no-repeat
+}
+
+.Second {
+    @apply h-[100px] w-[100px] bg-[url('/cogumelo.png')] bg-contain bg-center bg-no-repeat
+}
+
+.Null {
+    @apply h-[100px] w-[100px] bg-[url('/empty.png')] hover:bg-[url('/luckygif.gif')] bg-contain bg-center bg-no-repeat
+}
+
+.yes {
+    @apply h-screen w-full flex flex-col items-center bg-[url('/background.gif')] bg-cover
+    
+}
+
+.no {
+    @apply h-screen w-full flex flex-col items-center bg-[url('/background.jpg')] bg-cover
+}

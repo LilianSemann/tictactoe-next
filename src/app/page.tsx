@@ -1,64 +1,70 @@
 "use client"
 
+import Image from "next/image"
 import { useState } from "react"
 
 export default function Home() {
 
-  const shrek = {
-    backgroundImage: "url(https://images.tcdn.com.br/img/img_prod/1119462/boneco_shrek_edicao_comemorativa_de_20_anos_estrela_173474830_3_d7daa37407e321f58b0d663dfee1f7f5.jpg)",
-    backgroundSize: "cover"
+  const [player, setPlayer] = useState("First")
+  const [board, setboard] = useState(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]) 
+  const [won, setWon] = useState("no")
+
+  function play(index: number) {
+    if (board[index] != "Null") return
+
+    board[index] = player
+    setboard([...board])
+    setPlayer(player === "First" ? "Second" : "First")
+    if (won == "yes") setWon("no")
+    check()
   }
 
-  const fiona = {
-    background: "url(https://www.holdup.com.br/cdn/shop/products/meias-divertidas-fionna-meia-min_2000x.png?v=1599690666)",
-    backgroundSize: "cover"
+  function check() {
+    const audio = document.querySelectorAll('audio')
+    
+    if (board[0] == board[1] && board[0] == board[2] && board[0] != "Null") {audio[1].play(); setWon("yes"); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return} 
+    if (board[3] == board[4] && board[3] == board[5] && board[3] != "Null") {audio[1].play(); setWon("yes"); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
+    if (board[6] == board[7] && board[6] == board[8] && board[6] != "Null") {audio[1].play(); setWon("yes"); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
+    if (board[0] == board[4] && board[0] == board[8] && board[0] != "Null") {audio[1].play(); setWon("yes"); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
+    if (board[2] == board[4] && board[2] == board[6] && board[2] != "Null") {audio[1].play(); setWon("yes"); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
+    if (board[0] == board[3] && board[3] == board[6] && board[6] != "Null") {audio[1].play(); setWon("yes"); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
+    if (board[1] == board[4] && board[4] == board[7] && board[7] != "Null") {audio[1].play(); setWon("yes"); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
+    if (board[2] == board[5] && board[5] == board[8] && board[8] != "Null") {audio[1].play(); setWon("yes"); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
+
+    if (board[0] != "Null" && board[1] != "Null" && board[2] != "Null" && board[3] != "Null" && board[4] != "Null" && board[5] != "Null" && board[6] != "Null" && board[7] != "Null" && board[8] != "Null") {
+       audio[0].play(); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"])}
   }
-  
-    const [player, setPlayer] = useState("X")
-    const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""])
-
-    function play(index: number) {
-      if (board[index] != "") return
-
-      board[index] = player
-
-      setPlayer(player == "X" ? "O" : "X")
-      setBoard([...board])
-      check()
-    }
-
-    function check() {
-      if (board[0] == board[1] && board[0] == board[2] && board[0] != "") alert("player " + player + " won!")
-      if (board[3] == board[4] && board[3] == board[5] && board[3] != "") alert("player " + player + " won!")
-      if (board[6] == board[7] && board[6] == board[8] && board[6] != "") alert("player " + player + " won!")
-      if (board[0] == board[4] && board[0] == board[8] && board[0] != "") alert("player " + player + " won!")
-      if (board[2] == board[4] && board[2] == board[6] && board[2] != "") alert("player " + player + " won!")
-      if (board[0] == board[3] && board[3] == board[6] && board[6] != "") alert("player " + player + " won!")
-      if (board[1] == board[4] && board[4] == board[7] && board[7] != "") alert("player " + player + " won!")
-      if (board[2] == board[5] && board[5] == board[8] && board[8] != "") alert("player " + player + " won!")
-    }
-
-    return (
-    <section className="h-screen w-full bg-black flex justify-center items-center">
-      <table>
+    
+  return (
+    <section className={`${won}`}>
+      <Image
+        src={'/title.png'}
+        alt="title"
+        width={409}
+        height={149}
+        className="mt-4"
+      />
+      <table className="mt-4">
         <tbody>
           <tr>
-            <td onClick={() => play(0)} style={board[0] == "X" ? shrek : (board[0] == "O" ? fiona : {}) } className="w-[60px] h-[60px] border border-white text-3xl text-center hover:bg-zinc-800 text-white cursor-pointer"></td>
-            <td onClick={() => play(1)} style={board[1] == "X" ? shrek : (board[1] == "O" ? fiona : {}) } className="w-[60px] h-[60px] border border-white text-3xl text-center hover:bg-zinc-800 text-white cursor-pointer"></td>
-            <td onClick={() => play(2)} style={board[2] == "X" ? shrek : (board[2] == "O" ? fiona : {}) } className="w-[60px] h-[60px] border border-white text-3xl text-center hover:bg-zinc-800 text-white cursor-pointer"></td>
+            <td onClick={() => play(0)} className={`${board[0]}`}></td>
+            <td onClick={() => play(1)} className={`${board[1]}`}></td>
+            <td onClick={() => play(2)} className={`${board[2]}`}></td>
           </tr>
           <tr>
-            <td onClick={() => play(3)} style={board[3] == "X" ? shrek : (board[3] == "O" ? fiona : {}) } className="w-[60px] h-[60px] border border-white text-3xl text-center hover:bg-zinc-800 text-white cursor-pointer"></td>
-            <td onClick={() => play(4)} style={board[4] == "X" ? shrek : (board[4] == "O" ? fiona : {}) } className="w-[60px] h-[60px] border border-white text-3xl text-center hover:bg-zinc-800 text-white cursor-pointer"></td>
-            <td onClick={() => play(5)} style={board[5] == "X" ? shrek : (board[5] == "O" ? fiona : {}) } className="w-[60px] h-[60px] border border-white text-3xl text-center hover:bg-zinc-800 text-white cursor-pointer"></td>
+            <td onClick={() => play(3)} className={`${board[3]}`}></td>
+            <td onClick={() => play(4)} className={`${board[4]}`}></td>
+            <td onClick={() => play(5)} className={`${board[5]}`}></td>
           </tr>
           <tr>
-            <td onClick={() => play(6)} style={board[6] == "X" ? shrek : (board[6] == "O" ? fiona : {}) } className="w-[60px] h-[60px] border border-white text-3xl text-center hover:bg-zinc-800 text-white cursor-pointer"></td>
-            <td onClick={() => play(7)} style={board[7] == "X" ? shrek : (board[7] == "O" ? fiona : {}) } className="w-[60px] h-[60px] border border-white text-3xl text-center hover:bg-zinc-800 text-white cursor-pointer"></td>
-            <td onClick={() => play(8)} style={board[8] == "X" ? shrek : (board[8] == "O" ? fiona : {}) } className="w-[60px] h-[60px] border border-white text-3xl text-center hover:bg-zinc-800 text-white cursor-pointer"></td>
+            <td onClick={() => play(6)} className={`${board[6]}`}></td>
+            <td onClick={() => play(7)} className={`${board[7]}`}></td>
+            <td onClick={() => play(8)} className={`${board[8]}`}></td>
           </tr>
         </tbody>
       </table>
+      <audio src="/gameover.mp3"/>
+      <audio src="/win.mp3"/>
     </section>
   )
 }
