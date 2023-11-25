@@ -7,6 +7,7 @@ export default function Home() {
 
   const [player, setPlayer] = useState("First")
   const [board, setboard] = useState(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]) 
+  const [won, setWon] = useState("no")
 
   function play(index: number) {
     if (board[index] != "Null") return
@@ -14,27 +15,28 @@ export default function Home() {
     board[index] = player
     setboard([...board])
     setPlayer(player === "First" ? "Second" : "First")
+    if (won == "yes") setWon("no")
     check()
   }
 
   function check() {
     const audio = document.querySelectorAll('audio')
     
-    if (board[0] == board[1] && board[0] == board[2] && board[0] != "Null") {audio[1].play(); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return} 
-    if (board[3] == board[4] && board[3] == board[5] && board[3] != "Null") {audio[1].play(); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
-    if (board[6] == board[7] && board[6] == board[8] && board[6] != "Null") {audio[1].play(); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
-    if (board[0] == board[4] && board[0] == board[8] && board[0] != "Null") {audio[1].play(); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
-    if (board[2] == board[4] && board[2] == board[6] && board[2] != "Null") {audio[1].play(); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
-    if (board[0] == board[3] && board[3] == board[6] && board[6] != "Null") {audio[1].play(); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
-    if (board[1] == board[4] && board[4] == board[7] && board[7] != "Null") {audio[1].play(); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
-    if (board[2] == board[5] && board[5] == board[8] && board[8] != "Null") {audio[1].play(); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
+    if (board[0] == board[1] && board[0] == board[2] && board[0] != "Null") {audio[1].play(); setWon("yes"); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return} 
+    if (board[3] == board[4] && board[3] == board[5] && board[3] != "Null") {audio[1].play(); setWon("yes"); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
+    if (board[6] == board[7] && board[6] == board[8] && board[6] != "Null") {audio[1].play(); setWon("yes"); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
+    if (board[0] == board[4] && board[0] == board[8] && board[0] != "Null") {audio[1].play(); setWon("yes"); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
+    if (board[2] == board[4] && board[2] == board[6] && board[2] != "Null") {audio[1].play(); setWon("yes"); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
+    if (board[0] == board[3] && board[3] == board[6] && board[6] != "Null") {audio[1].play(); setWon("yes"); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
+    if (board[1] == board[4] && board[4] == board[7] && board[7] != "Null") {audio[1].play(); setWon("yes"); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
+    if (board[2] == board[5] && board[5] == board[8] && board[8] != "Null") {audio[1].play(); setWon("yes"); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"]); setPlayer("First"); return}
 
     if (board[0] != "Null" && board[1] != "Null" && board[2] != "Null" && board[3] != "Null" && board[4] != "Null" && board[5] != "Null" && board[6] != "Null" && board[7] != "Null" && board[8] != "Null") {
        audio[0].play(); setboard(["Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null", "Null"])}
   }
     
   return (
-    <section className="h-screen w-full flex flex-col items-center bg-[url('/background.jpg')] bg-cover">
+    <section className={`${won}`}>
       <Image
         src={'/title.png'}
         alt="title"
